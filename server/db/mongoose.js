@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var url = 'mongodb://localhost:27017/TodoApp';
+var url = process.env.DATABASEURL || 'mongodb://localhost:27017/TodoApp_backup';
 
 mongoose.Promise = global.Promise;
 mongoose.connect(url);
