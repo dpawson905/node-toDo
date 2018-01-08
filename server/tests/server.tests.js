@@ -6,18 +6,18 @@ const {app} = require('./../server');
 const {Todo} = require('./../models/todo');
 
 const todos = [{
-  _id: new ObjectID,
-  text: "First test todo"
+  _id: new ObjectID(),
+  text: 'First test todo'
 }, {
-  _id: new ObjectID,
-  text: "Second test todo",
+  _id: new ObjectID(),
+  text: 'Second test todo',
   completed: true,
   completedAt: 333
 }];
 
 beforeEach((done) => {
   Todo.remove({}).then(() => {
-    Todo.insertMany(todos);
+    return Todo.insertMany(todos);
   }).then(() => done());
 });
 
@@ -36,6 +36,7 @@ describe('POST /todos', () => {
         if (err) {
           return done(err);
         }
+
         Todo.find({text}).then((todos) => {
           expect(todos.length).toBe(1);
           expect(todos[0].text).toBe(text);
@@ -53,10 +54,11 @@ describe('POST /todos', () => {
         if (err) {
           return done(err);
         }
+
         Todo.find().then((todos) => {
           expect(todos.length).toBe(2);
           done();
-        }).catch((e) => done());
+        }).catch((e) => done(e));
       });
   });
 });
